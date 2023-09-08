@@ -1,16 +1,24 @@
 # flutter_test_framework
 
-A new Flutter project.
+Um novo projeto Flutter de login simples para teste com dois campos de entrada, um com CPF e outro de Senha, dois botões apenas com icone um para limpar o texto e outro para entrar e um link de esqueci a senha.
 
-## Getting Started
+Para entrar usar o CPF: 27696205099 e Senha:1234
 
-This project is a starting point for a Flutter application.
+O CPF gerei aleatóriamente pelo [Gerador de CPF](https://www.4devs.com.br/gerador_de_cpf)
 
-A few resources to get you started if this is your first Flutter project:
+Ao utilizar o CPF e Senha vai para a tela informando que o Login foi efetuado com sucesso com um texto e o botão sair que retorna a tela inicial de Login.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Os elementos das telas tem apenas as keys para utilização em testes de frameworks que colocarei futuramente no repositório
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Começando
+
+Este projeto é um ponto de partida para uma aplicação Flutter.
+
+Alguns recursos para você começar se este for seu primeiro projeto Flutter:
+
+- [Laboratório: Escreva seu primeiro aplicativo Flutter](https://docs.flutter.dev/get-started/codelab)
+- [Livro de receitas: exemplos úteis do Flutter](https://docs.flutter.dev/cookbook)
+
+Para obter ajuda para começar a desenvolver o Flutter, consulte o
+[documentação online](https://docs.flutter.dev/), que oferece tutoriais,
+exemplos, orientações sobre desenvolvimento móvel e uma referência completa da API.
