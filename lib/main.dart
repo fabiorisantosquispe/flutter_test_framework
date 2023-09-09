@@ -27,21 +27,12 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String _errorText = '';
   bool _showError = false;
-  final Key title = const Key('title_key');
-  final Key cpfKey = const Key('cpf_key');
-  final Key passwordKey = const Key('password_key');
-  final Key loginButtonKey = const Key('login_button');
-  final Key clearButtonKey = const Key('clear_button');
-  final Key forgotPasswordKey = const Key('forgot_password');
-  final Key logoutButtonKey = const Key('logout_button');
-  final Key loginSuccessBody = const Key('login_success_body');
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login', key: title),
+        title: const Text('Login', key: ValueKey('LoginTitle')),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -50,22 +41,17 @@ class _LoginPageState extends State<LoginPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               TextField(
-                key: cpfKey,
-                controller: _cpfController,
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  labelText: 'CPF',
-                  semanticLabel: 'Campo de CPF'
+                  key: const ValueKey('cpf'),
+                  controller: _cpfController,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(labelText: 'CPF'),
                 ),
-              ),
-              TextField(
-                key: passwordKey,
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Senha',
-                  semanticLabel: 'Campo de senha'),
-              ),
+               TextField(
+                  key: const ValueKey('password'),
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(labelText: 'Senha'),
+                ),
               const SizedBox(height: 16.0),
               Visibility(
                 visible: _showError,
@@ -74,43 +60,47 @@ class _LoginPageState extends State<LoginPage> {
                   style: const TextStyle(color: Colors.red),
                 ),
               ),
-              ElevatedButton(
-                key: loginButtonKey,
-                semanticLabel: 'Entrar',
-                onPressed: () {
-                  final cpf = _cpfController.text;
-                  final password = _passwordController.text;
+              Semantics(
+                label: 'Entrar', // Insira o rótulo semântico desejado aqui
+                child: ElevatedButton(
+                  key: const ValueKey('loginButton'),
+                  onPressed: () {
+                    final cpf = _cpfController.text;
+                    final password = _passwordController.text;
 
-                  if (cpf == '27696205099' && password == '1234') {
-                    // Login bem-sucedido, navegue para a segunda tela.
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SuccessPage(),
-                      ),
-                    );
-                  } else {
-                    setState(() {
-                      _errorText = 'CPF ou senha incorretos.';
-                      _showError = true;
-                    });
-                  }
-                },
-                child: const Icon(Icons.login),
+                    if (cpf == '27696205099' && password == '1234') {
+                      // Login bem-sucedido, navegue para a segunda tela.
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SuccessPage(),
+                        ),
+                      );
+                    } else {
+                      setState(() {
+                        _errorText = 'CPF ou senha incorretos.';
+                        _showError = true;
+                      });
+                    }
+                  },
+                  child: const Icon(Icons.login),
+                ),
               ),
-              ElevatedButton(
-                key: clearButtonKey,
-                onPressed: () {
-                  // Limpar campos
-                  _cpfController.clear();
-                  _passwordController.clear();
-                  setState(() {
-                    _errorText = '';
-                    _showError = false;
-                  });
-                },
-                child: const Icon(Icons.clear),
-                semanticLabel: 'Limpar campos',
+              Semantics(
+                label: 'Limpar campos',
+                child: ElevatedButton(
+                  key: const ValueKey('clearButton'),
+                  onPressed: () {
+                    // Limpar campos
+                    _cpfController.clear();
+                    _passwordController.clear();
+                    setState(() {
+                      _errorText = '';
+                      _showError = false;
+                    });
+                  },
+                  child: const Icon(Icons.clear),
+                ),
               ),
               const SizedBox(height: 16.0),
               TextButton(
@@ -120,7 +110,9 @@ class _LoginPageState extends State<LoginPage> {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: const Text(
-                          'Esqueci a Senha', key: title),
+                          'Esqueci a Senha',
+                          key: ValueKey('TitleEsqueciSenha'),
+                        ),
                         content: const Text(
                             'Entre em contato com o administrador para redefinir sua senha.'),
                         actions: <Widget>[
@@ -137,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: const Text(
                   'Esqueci a senha',
-                  key: forgotPasswordKey,
+                  key: ValueKey('esqueciSenha'),
                 ),
               ),
             ],
@@ -155,13 +147,12 @@ class SuccessPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Efetuado com Sucesso', key: title),
+        title: const Text('Login Efetuado com Sucesso',
+            key: ValueKey('LoginEfetuado')),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(
-              Icons.logout, 
-              key: logoutButtonKey
-              semanticLabel: 'Sair'),
+            icon: const Icon(Icons.logout,
+                key: ValueKey('logoutButton'), semanticLabel: 'Sair'),
             onPressed: () {
               // Navegue de volta à tela de login.
               Navigator.pop(context);
@@ -170,7 +161,7 @@ class SuccessPage extends StatelessWidget {
         ],
       ),
       body: const Center(
-        key: loginSuccessBody,
+        key: ValueKey('contentTextSucessLogin'),
         child: Text('Bem-vindo à sua conta!'),
       ),
     );
