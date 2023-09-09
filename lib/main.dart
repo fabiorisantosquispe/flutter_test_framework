@@ -27,14 +27,21 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String _errorText = '';
   bool _showError = false;
+  final Key title = const Key('title_key');
   final Key cpfKey = const Key('cpf_key');
   final Key passwordKey = const Key('password_key');
+  final Key loginButtonKey = const Key('login_button');
+  final Key clearButtonKey = const Key('clear_button');
+  final Key forgotPasswordKey = const Key('forgot_password');
+  final Key logoutButtonKey = const Key('logout_button');
+  final Key loginSuccessBody = const Key('login_success_body');
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login', key: ValueKey('title')),
+        title: const Text('Login', key: title),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -46,13 +53,18 @@ class _LoginPageState extends State<LoginPage> {
                 key: cpfKey,
                 controller: _cpfController,
                 keyboardType: TextInputType.number,
-                decoration: const InputDecoration(labelText: 'CPF'),
+                decoration: const InputDecoration(
+                  labelText: 'CPF',
+                  semanticLabel: 'Campo de CPF'
+                ),
               ),
               TextField(
                 key: passwordKey,
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(labelText: 'Senha'),
+                decoration: const InputDecoration(
+                  labelText: 'Senha',
+                  semanticLabel: 'Campo de senha'),
               ),
               const SizedBox(height: 16.0),
               Visibility(
@@ -63,7 +75,8 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               ElevatedButton(
-                key: const ValueKey('login_button'),
+                key: loginButtonKey,
+                semanticLabel: 'Entrar',
                 onPressed: () {
                   final cpf = _cpfController.text;
                   final password = _passwordController.text;
@@ -86,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: const Icon(Icons.login),
               ),
               ElevatedButton(
-                key: const ValueKey('clear_button'),
+                key: clearButtonKey,
                 onPressed: () {
                   // Limpar campos
                   _cpfController.clear();
@@ -97,6 +110,7 @@ class _LoginPageState extends State<LoginPage> {
                   });
                 },
                 child: const Icon(Icons.clear),
+                semanticLabel: 'Limpar campos',
               ),
               const SizedBox(height: 16.0),
               TextButton(
@@ -105,7 +119,8 @@ class _LoginPageState extends State<LoginPage> {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: const Text('Esqueci a Senha'),
+                        title: const Text(
+                          'Esqueci a Senha', key: title),
                         content: const Text(
                             'Entre em contato com o administrador para redefinir sua senha.'),
                         actions: <Widget>[
@@ -122,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: const Text(
                   'Esqueci a senha',
-                  key: ValueKey('forgot_password'),
+                  key: forgotPasswordKey,
                 ),
               ),
             ],
@@ -140,10 +155,13 @@ class SuccessPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login Efetuado com Sucesso'),
+        title: const Text('Login Efetuado com Sucesso', key: title),
         actions: <Widget>[
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(
+              Icons.logout, 
+              key: logoutButtonKey
+              semanticLabel: 'Sair'),
             onPressed: () {
               // Navegue de volta à tela de login.
               Navigator.pop(context);
@@ -152,7 +170,7 @@ class SuccessPage extends StatelessWidget {
         ],
       ),
       body: const Center(
-        key: ValueKey('login_success_body'),
+        key: loginSuccessBody,
         child: Text('Bem-vindo à sua conta!'),
       ),
     );
